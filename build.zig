@@ -1,17 +1,23 @@
 const std = @import("std");
 
-pub fn build(b: *std.build.Builder) void {
+pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
+    //_ = b.addModule("getopt", .{
+    //.source_file = .{
+    //.path = "getopt.zig",
+    //},
+    //});
+
     _ = b.addModule("getopt", .{
-        .source_file = .{
-            .path = "getopt.zig",
-        },
+        .root_source_file = b.path("src/getopt.zig"),
+        .target = target,
+        .optimize = optimize,
     });
 
     const tests = b.addTest(.{
-        .root_source_file = .{ .path = "getopt.zig" },
+        .root_source_file = b.path("src/getopt.zig"),
         .target = target,
         .optimize = optimize,
     });
